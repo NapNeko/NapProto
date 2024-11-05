@@ -1,7 +1,8 @@
 {
-  "name": "@nap-proto/core",
-  "version": "0.0.1",
+  "name": "@napneko/nap-proto-core",
+  "version": "0.0.2",
   "description": "A lightweight, elegant, and efficient protobuf-ts solution",
+  "main": "NapProto.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
