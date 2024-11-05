@@ -1,0 +1,8 @@
+node_modules
+build
+dist
+*.lock
+*.json
+*.md
+coverage
+LICENCE
