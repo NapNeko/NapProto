@@ -195,3 +195,5 @@ export class NapProtoMsg<T extends ProtoMessageType> {
         return this.realMsg.decode(data);
     }
 }
+
+export { ScalarType } from '@protobuf-ts/runtime';
