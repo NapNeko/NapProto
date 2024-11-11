@@ -46,12 +46,12 @@ interface BaseProtoFieldType<T, O extends boolean, R extends O extends true ? fa
     repeat: R;
 }
 
-interface ScalarProtoFieldType<T extends ScalarType, O extends boolean, R extends O extends true ? false : boolean>
+export interface ScalarProtoFieldType<T extends ScalarType, O extends boolean, R extends O extends true ? false : boolean>
     extends BaseProtoFieldType<T, O, R> {
     kind: 'scalar';
 }
 
-interface MessageProtoFieldType<
+export interface MessageProtoFieldType<
     T extends () => ProtoMessageType,
     O extends boolean,
     R extends O extends true ? false : boolean,
