@@ -127,7 +127,7 @@ export type NapProtoEncodeStructType<T> = NapProtoStructType<T, true>;
 
 export type NapProtoDecodeStructType<T> = NapProtoStructType<T, false>;
 
-class NapProtoRealMsg<T extends ProtoMessageType> {
+class NapProtoRealMsg<const T extends ProtoMessageType> {
     private readonly _field: PartialFieldInfo[];
     private readonly _proto_msg: MessageType<NapProtoStructType<T, boolean>>;
     private static cache = new WeakMap<ProtoMessageType, NapProtoRealMsg<any>>();
@@ -180,10 +180,10 @@ class NapProtoRealMsg<T extends ProtoMessageType> {
     }
 }
 
-export class NapProtoMsg<T extends ProtoMessageType> {
+export class NapProtoMsg<const T extends ProtoMessageType> {
     private realMsg: NapProtoRealMsg<T>;
 
-    constructor(fields: T) {
+    constructor(public fields: T) {
         this.realMsg = NapProtoRealMsg.getInstance(fields);
     }
 
