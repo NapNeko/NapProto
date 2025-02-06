@@ -1,9 +1,9 @@
 import { MessageType, PartialMessage, RepeatType, ScalarType } from '@protobuf-ts/runtime';
 import { PartialFieldInfo } from '@protobuf-ts/runtime/build/types/reflection-info';
 
-type LowerCamelCase<S extends string> = CamelCaseHelper<S, false, true>;
+export type LowerCamelCase<S extends string> = CamelCaseHelper<S, false, true>;
 
-type CamelCaseHelper<
+export type CamelCaseHelper<
     S extends string,
     CapNext extends boolean,
     IsFirstChar extends boolean,
@@ -19,7 +19,7 @@ type CamelCaseHelper<
               : `${F}${CamelCaseHelper<R, false, false>}`
     : '';
 
-type ScalarTypeToTsType<T extends ScalarType> = T extends
+export type ScalarTypeToTsType<T extends ScalarType> = T extends
     | ScalarType.DOUBLE
     | ScalarType.FLOAT
     | ScalarType.INT32
@@ -38,7 +38,7 @@ type ScalarTypeToTsType<T extends ScalarType> = T extends
             ? Uint8Array
             : never;
 
-interface BaseProtoFieldType<T, O extends boolean, R extends O extends true ? false : boolean> {
+export interface BaseProtoFieldType<T, O extends boolean, R extends O extends true ? false : boolean> {
     kind: 'scalar' | 'message';
     no: number;
     type: T;
@@ -59,11 +59,11 @@ export interface MessageProtoFieldType<
     kind: 'message';
 }
 
-type ProtoFieldType =
+export type ProtoFieldType =
     | ScalarProtoFieldType<ScalarType, boolean, boolean>
     | MessageProtoFieldType<() => ProtoMessageType, boolean, boolean>;
 
-type ProtoMessageType = {
+export type ProtoMessageType = {
     [key: string]: ProtoFieldType;
 };
 
@@ -90,14 +90,14 @@ export function ProtoField(
     }
 }
 
-type ProtoFieldReturnType<T, E extends boolean> =
+export type ProtoFieldReturnType<T, E extends boolean> =
     NonNullable<T> extends ScalarProtoFieldType<infer S, infer O, infer R>
         ? ScalarTypeToTsType<S>
         : T extends NonNullable<MessageProtoFieldType<infer S, infer O, infer R>>
           ? NonNullable<NapProtoStructType<ReturnType<S>, E>>
           : never;
 
-type RequiredFieldsBaseType<T, E extends boolean> = {
+export type RequiredFieldsBaseType<T, E extends boolean> = {
     [K in keyof T as T[K] extends { optional: true } ? never : LowerCamelCase<K & string>]: T[K] extends {
         repeat: true;
     }
@@ -105,7 +105,7 @@ type RequiredFieldsBaseType<T, E extends boolean> = {
         : ProtoFieldReturnType<T[K], E>;
 };
 
-type OptionalFieldsBaseType<T, E extends boolean> = {
+export type OptionalFieldsBaseType<T, E extends boolean> = {
     [K in keyof T as T[K] extends { optional: true } ? LowerCamelCase<K & string> : never]?: T[K] extends {
         repeat: true;
     }
@@ -113,15 +113,15 @@ type OptionalFieldsBaseType<T, E extends boolean> = {
         : ProtoFieldReturnType<T[K], E>;
 };
 
-type RequiredFieldsType<T, E extends boolean> = E extends true
+export type RequiredFieldsType<T, E extends boolean> = E extends true
     ? Partial<RequiredFieldsBaseType<T, E>>
     : RequiredFieldsBaseType<T, E>;
 
-type OptionalFieldsType<T, E extends boolean> = E extends true
+export type OptionalFieldsType<T, E extends boolean> = E extends true
     ? Partial<OptionalFieldsBaseType<T, E>>
     : OptionalFieldsBaseType<T, E>;
 
-type NapProtoStructType<T, E extends boolean> = RequiredFieldsType<T, E> & OptionalFieldsType<T, E>;
+export type NapProtoStructType<T, E extends boolean> = RequiredFieldsType<T, E> & OptionalFieldsType<T, E>;
 
 export type NapProtoEncodeStructType<T> = NapProtoStructType<T, true>;
 

@@ -1,7 +1,7 @@
 {
   "name": "@napneko/nap-proto-core",
   "type": "module",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A lightweight, elegant, and efficient protobuf-ts solution",
   "main": "dist/NapProto.js",
   "types": "dist/NapProto.d.ts",
