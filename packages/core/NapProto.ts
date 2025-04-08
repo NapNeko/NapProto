@@ -84,7 +84,13 @@ export function ProtoField(
     repeat?: boolean
 ): ProtoFieldType {
     if (typeof type === 'function') {
-        return { kind: 'message', no: no, type: type, optional: optional ?? false, repeat: repeat ?? false };
+        let snapshot: ProtoMessageType | undefined;
+        return { kind: 'message', no: no, type: () => {
+            if (!snapshot) {
+                snapshot = type();
+            }
+            return snapshot;
+        }, optional: optional ?? false, repeat: repeat ?? false };
     } else {
         return { kind: 'scalar', no: no, type: type, optional: optional ?? false, repeat: repeat ?? false };
     }
