@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { MessageType, PartialMessage, RepeatType, ScalarType } from '@protobuf-ts/runtime';
 import { PartialFieldInfo } from '@protobuf-ts/runtime/build/types/reflection-info';
 
